@@ -26,7 +26,11 @@ This project was built for practice purposes during my Full Stack training at Sm
 
 ## 📷 Screenshots
 
-(Add screenshots here)
+<img width="1878" height="2112" alt="screencapture-localhost-7027-2026-02-05-14_25_46" src="https://github.com/user-attachments/assets/83e2e0ff-c2f0-4b7c-954b-4ec42ea8fbbd" />
+<img width="1878" height="923" alt="screencapture-localhost-7027-Kategori-Kategoriler-2026-02-05-14_26_45" src="https://github.com/user-attachments/assets/eb148e33-e463-4beb-964c-f0cd3bd61c76" />
+<img width="1878" height="1410" alt="screencapture-localhost-7027-Kitap-KitapEkle-2026-02-05-14_26_55" src="https://github.com/user-attachments/assets/58d0f332-c3a2-48d5-81aa-6b49a30d3913" />
+<img width="1878" height="1310" alt="screencapture-localhost-7027-User-Register-2026-02-05-14_27_15" src="https://github.com/user-attachments/assets/42308c0b-4219-499e-a1ba-0e4bb40c4c18" />
+
 
 ## 👤 Developer
 
