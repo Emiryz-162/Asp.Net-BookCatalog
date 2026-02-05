@@ -1,0 +1,555 @@
+﻿@using Kitaplik3.DTOs.UserDTOs
+@model UserLoginDto
+@{
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<style>
+    /* Login Container */
+    .login-container {
+        max-width: 450px;
+        margin: 3rem auto;
+    }
+
+    /* Login Card */
+    .login-card {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .login-card {
+        background: #1e293b;
+        border-color: #334155;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .login-card:hover {
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+        border-color: #667eea;
+    }
+
+    body.dark-mode .login-card:hover {
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        border-color: #7c3aed;
+    }
+
+    /* Header */
+    .login-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .login-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        margin: 0 auto 1.5rem;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    body.dark-mode .login-icon {
+        background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+        box-shadow: 0 8px 20px rgba(124, 58, 237, 0.5);
+    }
+    
+    @@keyframes pulse {
+        0%, 100%
+
+    {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    }
+
+    .login-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    body.dark-mode .login-title {
+        background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .login-subtitle {
+        color: #718096;
+        font-size: 1rem;
+    }
+
+    body.dark-mode .login-subtitle {
+        color: #94a3b8;
+    }
+
+    /* Error Message */
+    .error-alert {
+        background: #fff5f5;
+        border: 2px solid #fc8181;
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #c53030;
+        font-weight: 500;
+    }
+
+    body.dark-mode .error-alert {
+        background: rgba(220, 38, 38, 0.1);
+        border-color: #dc2626;
+        color: #fca5a5;
+    }
+
+    .error-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    /* Form Groups */
+    .form-group-custom {
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+    /* Labels */
+    .form-label-custom {
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+        display: block;
+        font-size: 0.95rem;
+    }
+
+    body.dark-mode .form-label-custom {
+        color: #e2e8f0;
+    }
+
+    .label-icon {
+        margin-right: 0.5rem;
+    }
+
+    /* Inputs */
+    .form-control-custom {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #f7fafc;
+    }
+
+    body.dark-mode .form-control-custom {
+        background: #0f172a;
+        border-color: #334155;
+        color: #e2e8f0;
+    }
+
+    .form-control-custom:focus {
+        outline: none;
+        border-color: #667eea;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    body.dark-mode .form-control-custom:focus {
+        background: #1e293b;
+        border-color: #7c3aed;
+        box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2);
+    }
+
+    .form-control-custom:hover {
+        border-color: #cbd5e0;
+    }
+
+    body.dark-mode .form-control-custom:hover {
+        border-color: #475569;
+    }
+
+    /* Password Input Wrapper */
+    .password-input-wrapper {
+        position: relative;
+    }
+
+    .password-toggle-btn {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #718096;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .password-toggle-btn {
+        color: #94a3b8;
+    }
+
+    .password-toggle-btn:hover {
+        color: #667eea;
+        background: rgba(102, 126, 234, 0.1);
+    }
+
+    body.dark-mode .password-toggle-btn:hover {
+        color: #a78bfa;
+        background: rgba(167, 139, 250, 0.1);
+    }
+
+    /* Validation Messages */
+    .field-validation-error {
+        color: #e53e3e;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #fff5f5;
+        padding: 0.5rem 0.75rem;
+        border-radius: 8px;
+        border-left: 3px solid #e53e3e;
+    }
+
+    body.dark-mode .field-validation-error {
+        color: #fca5a5;
+        background: rgba(220, 38, 38, 0.1);
+        border-left-color: #dc2626;
+    }
+
+    .field-validation-valid {
+        display: none !important;
+    }
+
+    .input-validation-error {
+        border-color: #e53e3e !important;
+        background: #fff5f5 !important;
+    }
+
+    body.dark-mode .input-validation-error {
+        border-color: #dc2626 !important;
+        background: rgba(220, 38, 38, 0.1) !important;
+    }
+
+    /* Submit Button */
+    .btn-submit-custom {
+        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    body.dark-mode .btn-submit-custom {
+        background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+        box-shadow: 0 4px 15px rgba(124, 58, 237, 0.5);
+    }
+
+    .btn-submit-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    body.dark-mode .btn-submit-custom:hover {
+        box-shadow: 0 8px 25px rgba(124, 58, 237, 0.6);
+    }
+
+    .btn-submit-custom:active {
+        transform: translateY(-1px);
+    }
+
+    /* Forgot Password Link */
+    .forgot-password {
+        text-align: right;
+        margin-top: 0.75rem;
+    }
+
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+    body.dark-mode .forgot-password a {
+        color: #a78bfa;
+    }
+
+    .forgot-password a:hover {
+        color: #764ba2;
+        text-decoration: underline;
+    }
+
+    body.dark-mode .forgot-password a:hover {
+        color: #c084fc;
+    }
+
+    /* Divider */
+    .divider {
+        border-top: 2px solid #e2e8f0;
+        margin: 2rem 0 1.5rem;
+        position: relative;
+    }
+
+    body.dark-mode .divider {
+        border-top-color: #334155;
+    }
+
+    .divider::after {
+        content: 'VEYA';
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 0 1rem;
+        color: #718096;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    body.dark-mode .divider::after {
+        background: #1e293b;
+        color: #94a3b8;
+    }
+
+    /* Register Link */
+    .register-link-section {
+        text-align: center;
+    }
+
+    .register-text {
+        color: #718096;
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    body.dark-mode .register-text {
+        color: #94a3b8;
+    }
+
+    .register-link {
+        display: inline-block;
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 0.75rem 2rem;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        border: 2px solid #667eea;
+    }
+
+    body.dark-mode .register-link {
+        color: #a78bfa;
+        border-color: #7c3aed;
+    }
+
+    .register-link:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    body.dark-mode .register-link:hover {
+        background: #7c3aed;
+        color: white;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.5);
+    }
+
+    /* Welcome Back Animation */
+    .welcome-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        animation: slideDown 0.5s ease-out;
+    }
+
+    body.dark-mode .welcome-badge {
+        background: linear-gradient(135deg, #be185d 0%, #be123c 100%);
+    }
+
+    @@keyframes slideDown {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+
+    /* Responsive */
+    @@media (max-width: 576px) {
+        .login-container
+
+    {
+        margin: 1.5rem auto;
+        padding: 0 1rem;
+    }
+
+    .login-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .login-title {
+        font-size: 1.75rem;
+    }
+
+    .login-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+    }
+
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-card">
+        <!-- Header -->
+        <div class="login-header">
+            <div class="welcome-badge">
+                👋 Tekrar Hoş Geldiniz
+            </div>
+            <div class="login-icon">
+                🔐
+            </div>
+            <h1 class="login-title">Giriş Yap</h1>
+            <p class="login-subtitle">Hesabınıza erişim sağlayın</p>
+        </div>
+
+        <!-- Error Message -->
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="error-alert">
+                <span class="error-icon">⚠️</span>
+                <span>@ViewBag.ErrorMessage</span>
+            </div>
+        }
+
+        <!-- Form -->
+        <form asp-action="Login" asp-controller="User" method="post">
+            <!-- Email -->
+            <div class="form-group-custom">
+                <label class="form-label-custom">
+                    <span class="label-icon">📧</span>
+                    Email Adresiniz
+                </label>
+                <input type="email"
+                       class="form-control-custom"
+                       asp-for="Email"
+                       placeholder="ornek@email.com"
+                       autocomplete="email">
+                <span asp-validation-for="Email" class="field-validation-error"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group-custom">
+                <label class="form-label-custom">
+                    <span class="label-icon">🔒</span>
+                    Şifreniz
+                </label>
+                <div class="password-input-wrapper">
+                    <input type="password"
+                           class="form-control-custom"
+                           asp-for="Password"
+                           id="passwordInput"
+                           placeholder="••••••••"
+                           autocomplete="current-password">
+                    <button type="button"
+                            class="password-toggle-btn"
+                            id="passwordToggle"
+                            aria-label="Şifreyi göster/gizle">
+                        <span id="toggleIcon">👁️</span>
+                    </button>
+                </div>
+                <span asp-validation-for="Password" class="field-validation-error"></span>
+            </div>
+
+            <!-- Forgot Password -->
+            <div class="forgot-password">
+                <a href="#">Şifrenizi mi unuttunuz?</a>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-submit-custom">
+                🚀 Giriş Yap
+            </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="divider"></div>
+
+        <!-- Register Link -->
+        <div class="register-link-section">
+            <p class="register-text">Henüz hesabınız yok mu?</p>
+            <a asp-action="Register" asp-controller="User" class="register-link">
+                ✨ Hemen Kayıt Ol
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        // Password Toggle
+        document.getElementById('passwordToggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('passwordInput');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        });
+    </script>
+}

@@ -1,0 +1,716 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        margin-bottom: 3rem;
+        color: white;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.5s ease;
+    }
+
+    /* Dark mode için hero */
+    body.dark-mode .hero-section {
+        background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+        box-shadow: 0 20px 40px rgba(76, 29, 149, 0.5);
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 500px;
+        height: 500px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        bottom: -30%;
+        left: -5%;
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        opacity: 0.95;
+        margin-bottom: 2rem;
+        font-weight: 300;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-hero {
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-hero-primary {
+        background: white;
+        color: #667eea;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+            color: #667eea;
+        }
+
+    body.dark-mode .btn-hero-primary {
+        background: #1e293b;
+        color: #a78bfa;
+    }
+
+        body.dark-mode .btn-hero-primary:hover {
+            background: #334155;
+            color: #c4b5fd;
+        }
+
+    .btn-hero-secondary {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid white;
+    }
+
+        .btn-hero-secondary:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-3px);
+        }
+
+    body.dark-mode .btn-hero-secondary:hover {
+        background: #e2e8f0;
+        color: #5b21b6;
+    }
+
+    /* Stats Section */
+    .stats-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 2px solid #e2e8f0;
+    }
+
+    body.dark-mode .stat-card {
+        background: #1e293b;
+        border-color: #334155;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+        border-color: #667eea;
+    }
+
+    body.dark-mode .stat-card:hover {
+        box-shadow: 0 12px 24px rgba(124, 58, 237, 0.4);
+        border-color: #7c3aed;
+    }
+
+    .stat-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #667eea;
+        margin-bottom: 0.5rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .stat-number {
+        color: #a78bfa;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        color: #718096;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .stat-label {
+        color: #94a3b8;
+    }
+
+    /* Featured Books Section */
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .section-title {
+        color: #e2e8f0;
+    }
+
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: #718096;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .section-subtitle {
+        color: #94a3b8;
+    }
+
+    /* Carousel */
+    .carousel-custom {
+        margin-bottom: 3rem;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        background: white;
+        transition: all 0.5s ease;
+    }
+
+    body.dark-mode .carousel-custom {
+        background: #1e293b;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .carousel-item {
+        height: 500px;
+        transition: transform 0.6s ease-in-out;
+    }
+
+    .carousel-item-custom {
+        height: 100%;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem;
+        transition: background 0.5s ease;
+    }
+
+    body.dark-mode .carousel-item-custom {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .book-showcase {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        max-width: 1000px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .book-image-wrapper {
+        flex: 0 0 300px;
+    }
+
+    .book-image-showcase {
+        width: 300px;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .book-image-placeholder {
+        width: 300px;
+        height: 400px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 4rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        transition: background 0.5s ease;
+    }
+
+    body.dark-mode .book-image-placeholder {
+        background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .book-details {
+        flex: 1;
+        color: #2d3748;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .book-details {
+        color: #e2e8f0;
+    }
+
+    .book-title-showcase {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: #667eea;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .book-title-showcase {
+        color: #a78bfa;
+    }
+
+    .book-info-showcase {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .book-info-showcase {
+        color: #cbd5e1;
+    }
+
+    .book-isbn-showcase {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+        transition: background 0.3s ease;
+    }
+
+    body.dark-mode .book-isbn-showcase {
+        background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    }
+
+    /* Carousel Controls */
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%;
+        opacity: 0.8;
+    }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            opacity: 1;
+        }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: rgba(102, 126, 234, 0.8);
+        border-radius: 50%;
+        padding: 20px;
+        transition: background-color 0.3s ease;
+    }
+
+    body.dark-mode .carousel-control-prev-icon,
+    body.dark-mode .carousel-control-next-icon {
+        background-color: rgba(124, 58, 237, 0.9);
+    }
+
+    .carousel-indicators {
+        margin-bottom: 1.5rem;
+    }
+
+        .carousel-indicators button {
+            background-color: #667eea;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+    body.dark-mode .carousel-indicators button {
+        background-color: #7c3aed;
+    }
+
+    /* Features Section */
+    .features-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        text-align: center;
+        border: 2px solid #e2e8f0;
+    }
+
+    body.dark-mode .feature-card {
+        background: #1e293b;
+        border-color: #334155;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .feature-card:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .feature-card:nth-child(1):hover {
+        border-color: #667eea;
+    }
+
+    body.dark-mode .feature-card:nth-child(1):hover {
+        border-color: #7c3aed;
+    }
+
+    .feature-card:nth-child(2):hover {
+        border-color: #f5576c;
+    }
+
+    body.dark-mode .feature-card:nth-child(2):hover {
+        border-color: #ec4899;
+    }
+
+    .feature-card:nth-child(3):hover {
+        border-color: #38b2ac;
+    }
+
+    body.dark-mode .feature-card:nth-child(3):hover {
+        border-color: #06b6d4;
+    }
+
+    .feature-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 1rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .feature-title {
+        color: #e2e8f0;
+    }
+
+    .feature-description {
+        color: #718096;
+        line-height: 1.6;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .feature-description {
+        color: #94a3b8;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        text-align: center;
+        color: white;
+        box-shadow: 0 20px 40px rgba(245, 87, 108, 0.3);
+        transition: all 0.5s ease;
+    }
+
+    body.dark-mode .cta-section {
+        background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+        box-shadow: 0 20px 40px rgba(236, 72, 153, 0.5);
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+    }
+
+    .cta-subtitle {
+        font-size: 1.3rem;
+        opacity: 0.95;
+        margin-bottom: 2rem;
+    }
+
+    /* Responsive */
+    @@media (max-width: 992px) {
+        .book-showcase {
+            gap: 2rem;
+        }
+
+        .book-image-wrapper {
+            flex: 0 0 250px;
+        }
+
+        .book-image-showcase,
+        .book-image-placeholder {
+            width: 250px;
+            height: 350px;
+        }
+
+        .book-title-showcase {
+            font-size: 2rem;
+        }
+
+        .book-info-showcase {
+            font-size: 1rem;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .book-showcase {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .book-image-wrapper {
+            flex: 0 0 auto;
+        }
+
+        .carousel-item {
+            height: auto;
+        }
+
+        .carousel-item-custom {
+            padding: 2rem 1rem;
+        }
+    }
+</style>
+<br />
+<div class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">📚 Kitaplık'a Hoş Geldiniz</h1>
+            <p class="hero-subtitle">Binlerce kitap arasından favorilerinizi keşfedin</p>
+            <div class="hero-buttons">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Kitap" asp-action="Kitaplar" class="btn-hero btn-hero-primary">
+                        🔍 Kitapları İncele
+                    </a>
+                    <a asp-controller="Kitap" asp-action="KitapEkle" class="btn-hero btn-hero-secondary">
+                        ➕ Kitap Ekle
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="User" asp-action="Register" class="btn-hero btn-hero-primary">
+                        ✨ Hemen Kayıt Ol
+                    </a>
+                    <a asp-controller="User" asp-action="Login" class="btn-hero btn-hero-secondary">
+                        🔐 Giriş Yap
+                    </a>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-number">@ViewBag.TotalBooks</div>
+            <div class="stat-label">Toplam Kitap</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🏷️</div>
+            <div class="stat-number">@ViewBag.TotalCategories</div>
+            <div class="stat-label">Kategori</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-number">@(User.Identity.IsAuthenticated ? "Hoş Geldin!" : "Kayıt Ol")</div>
+            <div class="stat-label">@(User.Identity.IsAuthenticated? User.Identity.Name : "Üye Ol")</div>
+        </div>
+    </section>
+
+    <!-- Featured Books Carousel -->
+    @if (ViewBag.FeaturedBooks != null && ViewBag.FeaturedBooks.Count > 0)
+    {
+        <section class="section-header">
+            <h2 class="section-title">🌟 Öne Çıkan Kitaplar</h2>
+            <p class="section-subtitle">Son eklenen harika kitapları keşfedin</p>
+        </section>
+
+        <div id="bookCarousel" class="carousel slide carousel-custom" data-bs-ride="carousel">
+            <!-- Indicators -->
+            <div class="carousel-indicators">
+                @for (int i = 0; i < ViewBag.FeaturedBooks.Count; i++)
+                {
+                    <button type="button"
+                            data-bs-target="#bookCarousel"
+                            data-bs-slide-to="@i"
+                            class="@(i == 0 ? "active" : "")"
+                            aria-current="@(i == 0 ? "true" : "false")"
+                            aria-label="Slide @(i + 1)"></button>
+                }
+            </div>
+
+            <!-- Carousel Items -->
+            <div class="carousel-inner">
+                @for (int i = 0; i < ViewBag.FeaturedBooks.Count; i++)
+                {
+                    var book = ViewBag.FeaturedBooks[i];
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <div class="carousel-item-custom">
+                            <div class="book-showcase">
+                                <div class="book-image-wrapper">
+                                    @if (!string.IsNullOrEmpty(book.FotoUrl))
+                                    {
+                                        <img src="@book.FotoUrl" alt="@book.Name" class="book-image-showcase">
+                                    }
+                                    else
+                                    {
+                                        <div class="book-image-placeholder">
+                                            📖
+                                        </div>
+                                    }
+                                </div>
+                                <div class="book-details">
+                                    <h3 class="book-title-showcase">@book.Name</h3>
+                                    <p class="book-info-showcase"><strong>✍️ Yazar:</strong> @book.Author.Name</p>
+                                    <p class="book-info-showcase"><strong>🏷️ Kategori:</strong> @book.Category.Name</p>
+                                    <p class="book-info-showcase"><strong>🏢 Yayıncı:</strong> @book.Publisher.Name</p>
+                                    <span class="book-isbn-showcase">ISBN: @book.ISBN</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Önceki</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Sonraki</span>
+            </button>
+        </div>
+    }
+
+    <!-- Features Section -->
+    <section class="section-header" style="margin-top: 4rem;">
+        <h2 class="section-title">✨ Neden Kitaplık?</h2>
+        <p class="section-subtitle">Size sunduğumuz harika özellikler</p>
+    </section>
+
+    <section class="features-section">
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3 class="feature-title">Kolay Kullanım</h3>
+            <p class="feature-description">
+                Modern ve kullanıcı dostu arayüz ile kitaplarınızı kolayca yönetin
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3 class="feature-title">Güvenli Platform</h3>
+            <p class="feature-description">
+                Verileriniz güvende. Gelişmiş güvenlik önlemleri ile korunuyorsunuz
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3 class="feature-title">Hızlı Erişim</h3>
+            <p class="feature-description">
+                Tüm kitaplarınıza her yerden, her zaman anında erişin
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <section class="cta-section">
+            <h2 class="cta-title">🚀 Hemen Başlayın!</h2>
+            <p class="cta-subtitle">Ücretsiz hesap oluşturun ve kitap dünyanıza adım atın</p>
+            <div class="hero-buttons">
+                <a asp-controller="User" asp-action="Register" class="btn-hero btn-hero-primary">
+                    ✨ Ücretsiz Kayıt Ol
+                </a>
+            </div>
+        </section>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // Carousel'i manuel başlat
+        document.addEventListener('DOMContentLoaded', function() {
+            var carousel = document.getElementById('bookCarousel');
+            if (carousel) {
+                var bsCarousel = new bootstrap.Carousel(carousel, {
+                    interval: 5000,
+                    ride: 'carousel',
+                    wrap: true
+                });
+            }
+        });
+    </script>
+}

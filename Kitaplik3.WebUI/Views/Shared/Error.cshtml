@@ -1,0 +1,357 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Hata Oluştu";
+
+    // Rastgele resim seç
+    var random = new Random();
+    var imageNumber = random.Next(1, 6); // 1-5 arası
+    var imagePath = $"/errorimg/{imageNumber}.png";
+}
+
+<style>
+    .error-page {
+        max-width: 800px;
+        margin: 3rem auto;
+        padding: 0 1rem;
+        text-align: center;
+    }
+
+    .error-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        transition: all 0.5s ease;
+    }
+
+    body.dark-mode .error-hero {
+        background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+        box-shadow: 0 8px 20px rgba(76, 29, 149, 0.4);
+    }
+
+    .error-code {
+        font-size: 5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        animation: bounce 2s ease-in-out infinite;
+    }
+
+    @@keyframes bounce {
+        0%, 100%
+
+    {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    }
+
+    .error-title {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .error-subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .error-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+        transition: all 0.5s ease;
+    }
+
+    body.dark-mode .error-content {
+        background: #1e293b;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .sad-animal {
+        width: 100%;
+        max-width: 400px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 15px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease;
+    }
+
+    body.dark-mode .sad-animal {
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .sad-animal:hover {
+        transform: scale(1.05);
+    }
+
+    .error-message {
+        color: #4a5568;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .error-message {
+        color: #cbd5e1;
+    }
+
+    .error-suggestions {
+        background: #f7fafc;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border-left: 4px solid #667eea;
+        text-align: left;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .error-suggestions {
+        background: #0f172a;
+        border-left-color: #7c3aed;
+    }
+
+    .error-suggestions h3 {
+        color: #2d3748;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .error-suggestions h3 {
+        color: #e2e8f0;
+    }
+
+    .error-suggestions ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .error-suggestions li {
+        color: #4a5568;
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .error-suggestions li {
+        color: #cbd5e1;
+    }
+
+    .error-suggestions li::before {
+        content: "👉";
+        position: absolute;
+        left: 0;
+    }
+
+    .error-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .error-btn {
+        display: inline-block;
+        padding: 0.875rem 2rem;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    body.dark-mode .btn-primary {
+        background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+        box-shadow: 0 4px 12px rgba(76, 29, 149, 0.4);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+
+    body.dark-mode .btn-primary:hover {
+        box-shadow: 0 6px 20px rgba(76, 29, 149, 0.5);
+    }
+
+    .btn-secondary {
+        background: white;
+        color: #667eea;
+        border: 2px solid #667eea;
+    }
+
+    body.dark-mode .btn-secondary {
+        background: #1e293b;
+        color: #a78bfa;
+        border-color: #7c3aed;
+    }
+
+    .btn-secondary:hover {
+        background: #667eea;
+        color: white;
+        transform: translateY(-3px);
+    }
+
+    body.dark-mode .btn-secondary:hover {
+        background: #7c3aed;
+        color: white;
+    }
+
+    .error-id {
+        background: #fff5f7;
+        border-left: 4px solid #f5576c;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .error-id {
+        background: rgba(236, 72, 153, 0.1);
+        border-left-color: #ec4899;
+    }
+
+    .error-id p {
+        margin: 0;
+        color: #4a5568;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .error-id p {
+        color: #cbd5e1;
+    }
+
+    body.dark-mode .error-id strong {
+        color: #fda4af;
+    }
+
+    .error-id code {
+        background: #fed7e2;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-family: monospace;
+        color: #c53030;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .error-id code {
+        background: rgba(236, 72, 153, 0.2);
+        color: #fda4af;
+    }
+
+    @@media (max-width: 768px) {
+        .error-code
+
+    {
+        font-size: 3.5rem;
+    }
+
+    .error-title {
+        font-size: 1.5rem;
+    }
+
+    .error-actions {
+        flex-direction: column;
+    }
+
+    .error-btn {
+        width: 100%;
+    }
+
+    }
+</style>
+
+<div class="error-page">
+    <!-- Hero -->
+    <div class="error-hero">
+        <div class="error-code">😢</div>
+        <h1 class="error-title">Oops! Bir Hata Oluştu</h1>
+        <p class="error-subtitle">Üzgünüz, beklenmeyen bir şeyler oldu</p>
+    </div>
+
+    <!-- Content -->
+    <div class="error-content">
+        <!-- Üzgün Hayvan Resmi -->
+        <img src="@imagePath"
+             alt="Üzgün hayvan"
+             class="sad-animal"
+             onerror="this.src='/img/logo.png'">
+
+        <p class="error-message">
+            🐾 Bu küçük arkadaşımız kadar biz de üzgünüz!
+            Sayfa yüklenirken bir sorun oluştu.
+            Endişelenmeyin, sorunu çözmek için buradayız.
+        </p>
+
+        <!-- Öneriler -->
+        <div class="error-suggestions">
+            <h3>🔧 Ne Yapabilirsiniz?</h3>
+            <ul>
+                <li>Sayfayı yenilemeyi deneyin (F5 veya Ctrl+R)</li>
+                <li>Ana sayfaya dönüp tekrar deneyin</li>
+                <li>Tarayıcı önbelleğini temizleyin</li>
+                <li>Farklı bir tarayıcı kullanmayı deneyin</li>
+                <li>Sorun devam ederse bizimle iletişime geçin</li>
+            </ul>
+        </div>
+
+        <!-- Butonlar -->
+        <div class="error-actions">
+            <a asp-controller="Home" asp-action="Index" class="error-btn btn-primary">
+                🏠 Ana Sayfaya Dön
+            </a>
+            <button onclick="window.history.back()" class="error-btn btn-secondary">
+                ⬅️ Geri Git
+            </button>
+            <a asp-controller="Home" asp-action="Contact" class="error-btn btn-secondary">
+                📧 Destek Al
+            </a>
+        </div>
+
+        <!-- Hata ID (Development ortamında) -->
+        @if (Model.ShowRequestId)
+        {
+            <div class="error-id">
+                <p>
+                    <strong>🔍 Hata Takip Numarası:</strong><br>
+                    <code>@Model.RequestId</code>
+                </p>
+                <p style="margin-top: 0.5rem; font-size: 0.85rem;">
+                    Destek ekibiyle iletişime geçerken bu numarayı belirtin.
+                </p>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Sayfa yenilendiğinde farklı bir hayvan göster
+        console.log("🐾 Hata sayfası yüklendi. Resim: @imagePath");
+
+        // 10 saniye sonra otomatik ana sayfaya yönlendir (opsiyonel)
+        // setTimeout(() => {
+        //     window.location.href = '/';
+        // }, 10000);
+    </script>
+}

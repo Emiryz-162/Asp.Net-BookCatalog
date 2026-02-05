@@ -1,0 +1,404 @@
+﻿@{
+    ViewData["Title"] = "Gizlilik Politikası";
+}
+
+<style>
+    .privacy-page {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .privacy-hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-align: center;
+        padding: 3rem 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        transition: all 0.5s ease;
+    }
+
+    body.dark-mode .privacy-hero {
+        background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+    }
+
+    .privacy-hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .privacy-hero p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .content-box {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 15px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+        transition: all 0.5s ease;
+    }
+
+    body.dark-mode .content-box {
+        background: #1e293b;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .content-box h2 {
+        color: #667eea;
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #667eea;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .content-box h2 {
+        color: #a78bfa;
+        border-bottom-color: #7c3aed;
+    }
+
+    .content-box h3 {
+        color: #2d3748;
+        font-size: 1.4rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .content-box h3 {
+        color: #e2e8f0;
+    }
+
+    .content-box p {
+        color: #4a5568;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .content-box p {
+        color: #cbd5e1;
+    }
+
+    .content-box ul {
+        color: #4a5568;
+        line-height: 1.8;
+        padding-left: 2rem;
+        margin-bottom: 1rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .content-box ul {
+        color: #cbd5e1;
+    }
+
+    .content-box li {
+        margin-bottom: 0.5rem;
+    }
+
+    .highlight {
+        background: #fff5f7;
+        border-left: 4px solid #f5576c;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .highlight {
+        background: rgba(236, 72, 153, 0.1);
+        border-left-color: #ec4899;
+    }
+
+        body.dark-mode .highlight strong {
+            color: #fda4af;
+        }
+
+    .info {
+        background: #e6fffa;
+        border-left: 4px solid #38b2ac;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .info {
+        background: rgba(6, 182, 212, 0.1);
+        border-left-color: #06b6d4;
+    }
+
+        body.dark-mode .info strong {
+            color: #67e8f9;
+        }
+
+    .toc {
+        background: #f7fafc;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .toc {
+        background: #0f172a;
+    }
+
+    .toc h3 {
+        margin-bottom: 1rem;
+        color: #2d3748;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .toc h3 {
+        color: #e2e8f0;
+    }
+
+    .toc ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .toc li {
+        margin-bottom: 0.5rem;
+    }
+
+    .toc a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .toc a {
+        color: #a78bfa;
+    }
+
+    .toc a:hover {
+        text-decoration: underline;
+    }
+
+    body.dark-mode .toc a:hover {
+        color: #c4b5fd;
+    }
+
+    .contact-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        transition: all 0.5s ease;
+    }
+
+    body.dark-mode .contact-box {
+        background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+    }
+
+    .contact-box h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .contact-btn {
+        display: inline-block;
+        background: white;
+        color: #667eea;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .contact-btn {
+        background: #1e293b;
+        color: #a78bfa;
+    }
+
+    .contact-btn:hover {
+        background: #f7fafc;
+        color: #667eea;
+        transform: translateY(-2px);
+    }
+
+    body.dark-mode .contact-btn:hover {
+        background: #334155;
+        color: #c4b5fd;
+    }
+
+    @@media (max-width: 768px) {
+        .privacy-hero h1 {
+            font-size: 2rem;
+        }
+
+        .content-box {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<div class="privacy-page">
+    <!-- Hero -->
+    <div class="privacy-hero">
+        <h1>🔒 Gizlilik Politikası</h1>
+        <p>Kişisel verilerinizin güvenliği bizim için önemlidir</p>
+        <small>Son Güncelleme: 11 Aralık 2025</small>
+    </div>
+
+    <!-- İçindekiler -->
+    <div class="content-box">
+        <div class="toc">
+            <h3>📋 İçindekiler</h3>
+            <ul>
+                <li><a href="#giris">1. Giriş</a></li>
+                <li><a href="#toplanan">2. Toplanan Bilgiler</a></li>
+                <li><a href="#kullanim">3. Bilgilerin Kullanımı</a></li>
+                <li><a href="#guvenlik">4. Bilgi Güvenliği</a></li>
+                <li><a href="#cerezler">5. Çerezler</a></li>
+                <li><a href="#ucuncu">6. Üçüncü Taraf Hizmetler</a></li>
+                <li><a href="#haklar">7. Kullanıcı Hakları</a></li>
+                <li><a href="#degisiklikler">8. Politika Değişiklikleri</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 1. Giriş -->
+    <div class="content-box" id="giris">
+        <h2>1. Giriş</h2>
+        <p>
+            Kitaplık olarak, kullanıcılarımızın gizliliğini korumayı ve kişisel verilerini güvenli bir şekilde işlemeyi taahhüt ediyoruz.
+            Bu gizlilik politikası, web sitemizi kullanırken toplanan, kullanılan ve korunan bilgiler hakkında sizi bilgilendirmek amacıyla hazırlanmıştır.
+        </p>
+        <p>
+            Bu platformu kullanarak, bu gizlilik politikasında açıklanan uygulamaları kabul etmiş olursunuz.
+        </p>
+    </div>
+
+    <!-- 2. Toplanan Bilgiler -->
+    <div class="content-box" id="toplanan">
+        <h2>2. Toplanan Bilgiler</h2>
+        <p>Kitaplık platformunu kullanırken aşağıdaki bilgileri toplayabiliriz:</p>
+        <ul>
+            <li><strong>Kişisel Bilgiler:</strong> Adınız, soyadınız, e-posta adresiniz</li>
+            <li><strong>Hesap Bilgileri:</strong> Kullanıcı adı ve şifre (şifreli olarak saklanır)</li>
+            <li><strong>Kullanım Verileri:</strong> IP adresi, tarayıcı türü, ziyaret edilen sayfalar</li>
+            <li><strong>Kitaplık Verileri:</strong> Eklediğiniz kitaplar, kategoriler ve yayıncı bilgileri</li>
+        </ul>
+        <div class="info">
+            <strong>💡 Önemli Not:</strong> Kredi kartı veya banka hesap bilgilerinizi asla toplamıyoruz çünkü platformumuz tamamen ücretsizdir.
+        </div>
+    </div>
+
+    <!-- 3. Bilgilerin Kullanımı -->
+    <div class="content-box" id="kullanim">
+        <h2>3. Bilgilerin Kullanımı</h2>
+        <p>Topladığımız bilgileri şu amaçlarla kullanırız:</p>
+        <ul>
+            <li>Hesabınızı oluşturmak ve yönetmek</li>
+            <li>Kitaplık koleksiyonunuzu saklamak ve görüntülemek</li>
+            <li>Platform güvenliğini sağlamak ve yetkisiz erişimi önlemek</li>
+            <li>Hizmetlerimizi geliştirmek ve kullanıcı deneyimini iyileştirmek</li>
+            <li>Önemli güncellemeler veya değişiklikler hakkında sizi bilgilendirmek</li>
+        </ul>
+        <div class="highlight">
+            <strong>⚠️ Önemli:</strong> Kişisel bilgilerinizi hiçbir zaman üçüncü taraflara satmıyoruz veya pazarlama amaçlı kullanmıyoruz.
+        </div>
+    </div>
+
+    <!-- 4. Bilgi Güvenliği -->
+    <div class="content-box" id="guvenlik">
+        <h2>4. Bilgi Güvenliği</h2>
+        <p>Kişisel verilerinizin güvenliğini sağlamak için endüstri standardı güvenlik önlemleri kullanıyoruz:</p>
+        <ul>
+            <li><strong>Şifreleme:</strong> Tüm şifreler hash'lenerek saklanır</li>
+            <li><strong>HTTPS:</strong> Veri aktarımı SSL/TLS ile şifrelenir</li>
+            <li><strong>Erişim Kontrolü:</strong> Verilerinize sadece siz erişebilirsiniz</li>
+            <li><strong>Düzenli Yedekleme:</strong> Veri kaybını önlemek için düzenli yedekler alınır</li>
+            <li><strong>Güvenlik Güncellemeleri:</strong> Sistemlerimiz sürekli güncellenir</li>
+        </ul>
+    </div>
+
+    <!-- 5. Çerezler -->
+    <div class="content-box" id="cerezler">
+        <h2>5. Çerezler (Cookies)</h2>
+        <p>
+            Web sitemiz, kullanıcı deneyimini iyileştirmek için çerezler kullanır.
+            Çerezler, tarayıcınız tarafından cihazınızda saklanan küçük metin dosyalarıdır.
+        </p>
+        <h3>Kullandığımız çerez türleri:</h3>
+        <ul>
+            <li><strong>Oturum Çerezleri:</strong> Giriş durumunuzu korumak için gereklidir</li>
+            <li><strong>Tercih Çerezleri:</strong> Ayarlarınızı ve tercihlerinizi hatırlar</li>
+            <li><strong>Güvenlik Çerezleri:</strong> Hesabınızı korumaya yardımcı olur</li>
+        </ul>
+        <p>
+            Tarayıcı ayarlarınızdan çerezleri yönetebilir veya silebilirsiniz,
+            ancak bu bazı özelliklerin çalışmamasına neden olabilir.
+        </p>
+    </div>
+
+    <!-- 6. Üçüncü Taraf -->
+    <div class="content-box" id="ucuncu">
+        <h2>6. Üçüncü Taraf Hizmetler</h2>
+        <p>
+            Platformumuz, işlevselliği artırmak için bazı üçüncü taraf hizmetlerini kullanabilir.
+            Bu hizmetler kendi gizlilik politikalarına sahiptir:
+        </p>
+        <ul>
+            <li>Altyapı ve barındırma hizmetleri</li>
+            <li>İçerik dağıtım ağları (CDN)</li>
+            <li>Güvenlik ve izleme araçları</li>
+        </ul>
+        <p>Bu hizmetlerin gizlilik uygulamalarını incelemenizi öneririz.</p>
+    </div>
+
+    <!-- 7. Kullanıcı Hakları -->
+    <div class="content-box" id="haklar">
+        <h2>7. Kullanıcı Hakları (KVKK & GDPR)</h2>
+        <p>Kişisel verilerinizle ilgili aşağıdaki haklara sahipsiniz:</p>
+        <ul>
+            <li><strong>Erişim Hakkı:</strong> Hangi verilerinizin işlendiğini öğrenebilirsiniz</li>
+            <li><strong>Düzeltme Hakkı:</strong> Yanlış veya eksik bilgileri düzeltebilirsiniz</li>
+            <li><strong>Silme Hakkı:</strong> Hesabınızı ve verilerinizi tamamen silebilirsiniz</li>
+            <li><strong>İtiraz Hakkı:</strong> Veri işleme faaliyetlerine itiraz edebilirsiniz</li>
+            <li><strong>Veri Taşınabilirliği:</strong> Verilerinizi yapılandırılmış formatta isteyebilirsiniz</li>
+        </ul>
+        <div class="info">
+            <strong>📧 Haklarınızı Kullanın:</strong> Bu haklarınızı kullanmak için bizimle iletişime geçebilirsiniz.
+            Talebinizi en kısa sürede yanıtlayacağız.
+        </div>
+    </div>
+
+    <!-- 8. Değişiklikler -->
+    <div class="content-box" id="degisiklikler">
+        <h2>8. Politika Değişiklikleri</h2>
+        <p>
+            Bu gizlilik politikasını zaman zaman güncelleyebiliriz.
+            Önemli değişiklikler yapıldığında sizi bilgilendireceğiz.
+        </p>
+        <p>
+            Bu sayfayı düzenli olarak kontrol ederek güncellemelerden haberdar olabilirsiniz.
+            Son güncelleme tarihi sayfanın üst kısmında belirtilmiştir.
+        </p>
+        <p>
+            Politika değişikliklerinden sonra platformu kullanmaya devam etmeniz,
+            yeni şartları kabul ettiğiniz anlamına gelir.
+        </p>
+    </div>
+
+    <!-- İletişim -->
+    <div class="contact-box">
+        <h3>📬 Sorularınız mı var?</h3>
+        <p> 
+            Gizlilik politikamız hakkında sorularınız veya endişeleriniz varsa,
+            bizimle iletişime geçmekten çekinmeyin.
+        </p>
+        <a asp-controller="Home" asp-action="Contact" class="contact-btn">📧 Bize Ulaşın</a>
+    </div>
+</div>

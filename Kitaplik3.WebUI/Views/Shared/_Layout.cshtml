@@ -1,0 +1,629 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Kitaplık</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Kitaplik3.WebUI.styles.css" asp-append-version="true" />
+    <style>
+        /* Body ve HTML tam yükseklik */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Main içerik alanı */
+        main {
+            flex: 1 0 auto;
+            padding-bottom: 2rem;
+        }
+
+        /* Footer en altta sabit */
+        .footer-custom {
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-top: auto;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.5s ease;
+        }
+
+            .footer-custom a {
+                color: #ffd700;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+                .footer-custom a:hover {
+                    color: white;
+                    text-decoration: underline;
+                }
+
+        /* Modern Navbar Tasarımı */
+        .navbar-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            transition: background 0.5s ease;
+        }
+
+        .navbar-brand-custom {
+            display: flex;
+            align-items: center;
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+            .navbar-brand-custom:hover {
+                transform: scale(1.05);
+            }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            margin-right: 12px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+            .logo-img:hover {
+                transform: rotate(5deg) scale(1.1);
+            }
+
+        .navbar-custom .nav-link {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+            .navbar-custom .nav-link:hover {
+                background: rgba(255, 255, 255, 0.2);
+                color: white !important;
+                transform: translateY(-2px);
+            }
+
+            .navbar-custom .nav-link.active {
+                background: rgba(255, 255, 255, 0.25);
+                color: white !important;
+            }
+
+        .user-info {
+            color: white;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
+
+            .user-info strong {
+                color: #ffd700;
+            }
+
+        .btn-custom-logout {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .btn-custom-logout:hover {
+                background: rgba(255, 59, 59, 0.9);
+                border-color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        .btn-custom-login {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+            .btn-custom-login:hover {
+                background: white;
+                color: #667eea;
+                border-color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        .btn-custom-register {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+            .btn-custom-register:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+                color: white;
+            }
+
+        /* Dark Mode Toggle Button */
+        /* Dark Mode Toggle Button */
+        .dark-mode-toggle {
+            position: relative;
+            width: 90px;
+            height: 44px;
+            background: transparent;
+            border: none;
+            border-radius: 22px;
+            cursor: pointer;
+            overflow: visible;
+            transition: all 0.5s ease;
+            padding: 0;
+        }
+
+            .dark-mode-toggle:hover {
+                transform: scale(1.08);
+            }
+
+        /* Track (arka plan) */
+        .toggle-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 22px;
+            transition: background 0.8s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Gündüz modu arka planı */
+        body:not(.dark-mode) .toggle-track {
+            background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+        }
+
+        /* Gece modu arka planı */
+        body.dark-mode .toggle-track {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        /* Thumb (Güneş/Ay) */
+        .toggle-thumb {
+            position: absolute;
+            top: 50%;
+            left: 4px;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        /* Dark mode'da thumb sağa kayar */
+        body.dark-mode .toggle-thumb {
+            left: 50px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        /* Güneş ikonu */
+        .sun {
+            opacity: 1;
+            transition: opacity 0.4s ease;
+            display: block;
+        }
+
+        body.dark-mode .sun {
+            opacity: 0;
+            display: none;
+        }
+
+        /* Ay ikonu */
+        .moon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: none;
+        }
+
+        body.dark-mode .moon {
+            opacity: 1;
+            display: block;
+        }
+
+        /* Yıldızlar (gece modu) */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        body.dark-mode .stars {
+            opacity: 1;
+        }
+
+        .star {
+            position: absolute;
+            font-size: 0.45rem;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+            .star:nth-child(1) {
+                left: 10%;
+                top: 25%;
+            }
+
+            .star:nth-child(2) {
+                left: 28%;
+                top: 50%;
+                animation-delay: 0.5s;
+            }
+
+            .star:nth-child(3) {
+                left: 68%;
+                top: 20%;
+                animation-delay: 1s;
+            }
+
+            .star:nth-child(4) {
+                left: 85%;
+                top: 45%;
+                animation-delay: 1.5s;
+            }
+
+            .star:nth-child(5) {
+                left: 50%;
+                top: 65%;
+                animation-delay: 2s;
+            }
+
+        @@keyframes twinkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+        /* Bulutlar (gündüz modu) */
+        .clouds {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        body.dark-mode .clouds {
+            opacity: 0;
+        }
+
+        .cloud {
+            position: absolute;
+            font-size: 0.55rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+            .cloud:nth-child(1) {
+                left: 18%;
+                top: 32%;
+            }
+
+            .cloud:nth-child(2) {
+                left: 52%;
+                top: 22%;
+                animation-delay: 1s;
+            }
+
+            .cloud:nth-child(3) {
+                left: 78%;
+                top: 38%;
+                animation-delay: 2s;
+            }
+
+        @@keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        /* ==================== DARK MODE GLOBAL STYLES ==================== */
+
+        /* Dark mode aktif olduğunda */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e2e8f0;
+        }
+
+            /* Navbar dark mode */
+            body.dark-mode .navbar-custom {
+                background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+            }
+
+            /* Footer dark mode */
+            body.dark-mode .footer-custom {
+                background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+            }
+
+            /* Card/Box'lar dark mode */
+            body.dark-mode .privacy-card,
+            body.dark-mode .content-box,
+            body.dark-mode .contact-info-box,
+            body.dark-mode .contact-form-box,
+            body.dark-mode .map-box,
+            body.dark-mode .book-card,
+            body.dark-mode .form-card,
+            body.dark-mode .register-card,
+            body.dark-mode .login-card {
+                background: #1e293b;
+                border-color: #334155;
+                color: #e2e8f0;
+            }
+
+            /* Input'lar dark mode */
+            body.dark-mode input,
+            body.dark-mode textarea,
+            body.dark-mode select {
+                background: #0f172a;
+                color: #e2e8f0;
+                border-color: #334155;
+            }
+
+                body.dark-mode input:focus,
+                body.dark-mode textarea:focus,
+                body.dark-mode select:focus {
+                    background: #1e293b;
+                    border-color: #7c3aed;
+                }
+
+            /* Başlıklar dark mode */
+            body.dark-mode h1,
+            body.dark-mode h2,
+            body.dark-mode h3,
+            body.dark-mode h4,
+            body.dark-mode h5,
+            body.dark-mode h6 {
+                color: #e2e8f0;
+            }
+
+            /* Linkler dark mode */
+            body.dark-mode a {
+                color: #a78bfa;
+            }
+
+                body.dark-mode a:hover {
+                    color: #c4b5fd;
+                }
+
+            /* Tablolar dark mode */
+            body.dark-mode table {
+                color: #e2e8f0;
+            }
+
+            body.dark-mode .table {
+                --bs-table-bg: #1e293b;
+                --bs-table-striped-bg: #334155;
+                --bs-table-hover-bg: #475569;
+                color: #e2e8f0;
+            }
+
+        /* Responsive */
+        @@media (max-width: 768px) {
+            .logo-img {
+                height: 40px;
+            }
+
+            .navbar-brand-custom {
+                font-size: 1.2rem;
+            }
+
+            .user-info {
+                margin-bottom: 0.5rem;
+            }
+
+            .dark-mode-toggle {
+                width: 100px;
+                height: 45px;
+                margin-bottom: 0.5rem;
+            }
+
+            .toggle-thumb {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2rem;
+            }
+
+            body.dark-mode .toggle-thumb {
+                left: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <!-- Logo ve Marka -->
+                <a class="navbar-brand-custom" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/logo.png" alt="Kitaplık Logo" class="logo-img" />
+                    <span>Kitaplık</span>
+                </a>
+
+                <!-- Mobile Toggle -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                        style="border-color: rgba(255,255,255,0.5);">
+                    <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+                </button>
+
+                <!-- Navbar İçerik -->
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Kitap" asp-action="Kitaplar">
+                                📚 Kitaplar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Kategori" asp-action="Kategoriler">
+                                🏷️ Kategoriler
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Yayinci" asp-action="Yayincilar">
+                                🏢 Yayıncılar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Yazar" asp-action="Yazarlar">
+                                ✍️ Yazarlar
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Login/Logout Bölümü -->
+                    <div class="d-flex align-items-center flex-wrap">
+                        <!-- DARK MODE TOGGLE -->
+                        <button id="darkModeToggle" class="dark-mode-toggle me-3" aria-label="Dark mode toggle">
+                            <div class="toggle-track">
+                                <div class="toggle-thumb">
+                                    <span class="sun">☀️</span>
+                                    <span class="moon">🌙</span>
+                                </div>
+                                <div class="stars">
+                                    <span class="star" style="left: 10%; top: 20%;">⭐</span>
+                                    <span class="star" style="left: 30%; top: 40%;">⭐</span>
+                                    <span class="star" style="left: 50%; top: 15%;">⭐</span>
+                                    <span class="star" style="left: 70%; top: 35%;">⭐</span>
+                                    <span class="star" style="left: 85%; top: 25%;">⭐</span>
+                                </div>
+                                <div class="clouds">
+                                    <span class="cloud" style="left: 15%; top: 30%;">☁️</span>
+                                    <span class="cloud" style="left: 50%; top: 20%;">☁️</span>
+                                    <span class="cloud" style="left: 75%; top: 35%;">☁️</span>
+                                </div>
+                            </div>
+                        </button>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <span class="user-info">
+                                👤 Hoş geldin, <strong>@User.Identity.Name</strong>
+                            </span>
+                            <form asp-action="Logout" asp-controller="User" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-custom-logout">
+                                    🚪 Çıkış Yap
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-action="Login" asp-controller="User" class="btn-custom-login me-2">
+                                🔐 Giriş Yap
+                            </a>
+                            <a asp-action="Register" asp-controller="User" class="btn-custom-register">
+                                ✨ Kayıt Ol
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="container">
+        @RenderBody()
+    </main>
+
+    <footer class="footer-custom">
+        <div class="container text-center">
+            <p class="mb-2">
+                &copy; 2025 Kitaplık - Tüm hakları saklıdır
+            </p>
+            <p class="mb-0">
+                <a asp-controller="Home" asp-action="Privacy">Gizlilik Politikası</a> |
+                <a asp-controller="Home" asp-action="Contact">İletişim</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- DARK MODE SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+
+            // LocalStorage'dan tercihi oku
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+            if (isDarkMode) {
+                body.classList.add('dark-mode');
+            }
+
+            // Toggle butonuna tıklandığında
+            darkModeToggle.addEventListener('click', function () {
+                body.classList.toggle('dark-mode');
+
+                // Tercihi kaydet
+                const isDark = body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDark);
+
+                // Haptic feedback (varsa)
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

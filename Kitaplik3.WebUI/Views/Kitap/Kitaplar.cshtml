@@ -1,0 +1,360 @@
+﻿@model List<Book>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    /* Sayfa Başlığı */
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        transition: all 0.5s ease;
+    }
+
+    body.dark-mode .page-header {
+        background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+        box-shadow: 0 8px 16px rgba(76, 29, 149, 0.5);
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    /* Kitap Kartları */
+    .book-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+        border: 2px solid transparent;
+    }
+
+    body.dark-mode .book-card {
+        background: #1e293b;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        border-color: #334155;
+    }
+
+    .book-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(102, 126, 234, 0.3);
+        border-color: #667eea;
+    }
+
+    body.dark-mode .book-card:hover {
+        box-shadow: 0 12px 24px rgba(124, 58, 237, 0.5);
+        border-color: #7c3aed;
+    }
+
+    .book-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        transition: background 0.5s ease;
+    }
+
+    body.dark-mode .book-image {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .book-body {
+        padding: 1.5rem;
+    }
+
+    .book-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .book-title {
+        color: #e2e8f0;
+    }
+
+    .book-info {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+        font-size: 0.95rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .book-info {
+        color: #cbd5e1;
+    }
+
+    .book-info-label {
+        font-weight: 600;
+        color: #667eea;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .book-info-label {
+        color: #a78bfa;
+    }
+
+    .book-isbn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        display: inline-block;
+        margin-top: 0.5rem;
+        transition: background 0.3s ease;
+    }
+
+    body.dark-mode .book-isbn {
+        background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    }
+
+    /* Butonlar */
+    .book-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .btn-custom {
+        flex: 1;
+        border-radius: 8px;
+        font-weight: 500;
+        padding: 0.5rem;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+    }
+
+    body.dark-mode .btn-edit {
+        background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    }
+
+    .btn-edit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(245, 87, 108, 0.4);
+        color: white;
+    }
+
+    body.dark-mode .btn-edit:hover {
+        box-shadow: 0 4px 8px rgba(236, 72, 153, 0.6);
+    }
+
+    .btn-delete {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        color: white;
+    }
+
+    body.dark-mode .btn-delete {
+        background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+    }
+
+    .btn-delete:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(250, 112, 154, 0.4);
+        color: white;
+    }
+
+    body.dark-mode .btn-delete:hover {
+        box-shadow: 0 4px 8px rgba(220, 38, 38, 0.6);
+    }
+
+    .btn-add-book {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 0.75rem 2rem;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    body.dark-mode .btn-add-book {
+        background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+        color: white;
+    }
+
+    .btn-add-book:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+
+    body.dark-mode .btn-add-book:hover {
+        box-shadow: 0 8px 16px rgba(124, 58, 237, 0.6);
+    }
+
+    /* Boş Durum */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.5s ease;
+    }
+
+    body.dark-mode .empty-state {
+        background: #1e293b;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .empty-icon {
+        font-size: 5rem;
+        margin-bottom: 1rem;
+    }
+
+    .empty-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .empty-title {
+        color: #e2e8f0;
+    }
+
+    .empty-text {
+        color: #718096;
+        margin-bottom: 1.5rem;
+        transition: color 0.3s ease;
+    }
+
+    body.dark-mode .empty-text {
+        color: #94a3b8;
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .book-image {
+            height: 250px;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<br />
+<div class="container">
+    <!-- Sayfa Başlığı -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h1 class="page-title">📚 Kitaplar Koleksiyonu</h1>
+                <p class="mb-0 mt-2" style="opacity: 0.9;">Toplam @Model.Count kitap listeleniyor</p>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="col-auto">
+                    <a asp-controller="Kitap" asp-action="KitapEkle" class="btn-add-book">
+                        ➕ Yeni Kitap Ekle
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <!-- Boş Durum -->
+        <div class="empty-state">
+            <div class="empty-icon">📖</div>
+            <h2 class="empty-title">Henüz kitap eklenmemiş</h2>
+            <p class="empty-text">Koleksiyonunuza ilk kitabı ekleyerek başlayın!</p>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Kitap" asp-action="KitapEkle" class="btn-add-book">
+                    ➕ İlk Kitabı Ekle
+                </a>
+            }
+        </div>
+    }
+    else
+    {
+        <!-- Kitap Kartları -->
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                    <div class="book-card">
+                        <!-- Kitap Resmi -->
+                        @if (!string.IsNullOrEmpty(item.FotoUrl))
+                        {
+                            <img src="@item.FotoUrl" alt="@item.Name" class="book-image" />
+                        }
+                        else
+                        {
+                            <div class="book-image d-flex align-items-center justify-content-center">
+                                <span style="font-size: 4rem; opacity: 0.3;">📚</span>
+                            </div>
+                        }
+
+                        <!-- Kitap Bilgileri -->
+                        <div class="book-body">
+                            <h3 class="book-title" title="@item.Name">@item.Name</h3>
+
+                            <div class="book-info">
+                                <span class="book-info-label">🏷️ Kategori:</span> @item.Category.Name
+                            </div>
+
+                            <div class="book-info">
+                                <span class="book-info-label">✍️ Yazar:</span> @item.Author.Name
+                            </div>
+
+                            <div class="book-info">
+                                <span class="book-info-label">🏢 Yayıncı:</span> @item.Publisher.Name
+                            </div>
+
+                            <span class="book-isbn">ISBN: @item.ISBN</span>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <!-- Butonlar (Sadece Login Olanlar) -->
+                                <div class="book-actions">
+                                    <form asp-controller="Kitap" asp-action="KitapGuncelle" method="get" class="flex-fill">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn btn-custom btn-edit w-100">
+                                            ✏️ Düzenle
+                                        </button>
+                                    </form>
+
+                                    <form asp-controller="Kitap" asp-action="Sil" method="post" class="flex-fill"
+                                          onsubmit="return confirm('[@item.Name] kitabını silmek istediğinize emin misiniz?');">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                        <button type="submit" class="btn btn-custom btn-delete w-100">
+                                            🗑️ Sil
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
